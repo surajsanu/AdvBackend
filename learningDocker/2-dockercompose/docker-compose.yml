@@ -1,0 +1,20 @@
+services:
+  backend:
+    build: ./backend # for local dockerfile builds
+    # environment:    - for one env variable
+    #   - PORT=7000  
+
+    env_file:
+      - ./backend/.env
+    ports:
+      - 8000:7000
+
+  frontend:
+    build: ./frontend 
+    ports:
+      - "5173:5173"
+  
+  redis:
+    image: redis #Direct image building here from docker hub
+    ports:
+      - 6379:6379
