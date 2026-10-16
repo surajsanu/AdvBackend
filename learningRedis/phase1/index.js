@@ -4,6 +4,7 @@ import connectDB from "./lib/db.js";
 import dns from 'dns';
 import User from "./model/user.model.js";
 import Redis from "ioredis";
+import ratelimitter from "./middleware/ratelimit.js";
 dns.setServers(['8.8.8.8', '1.1.1.1']);
 
 dotenv.config();
@@ -11,7 +12,7 @@ dotenv.config();
 const port = process.env.PORT || 5000;
 const app = express();
 
-const redis=new Redis(process.env.REDIS_URL)
+export const redis=new Redis(process.env.REDIS_URL)
 connectDB();
 
 app.use(express.json())
@@ -30,7 +31,7 @@ app.post("/create", async(req,res)=>{
     res.json(user)
 })
 
-app.get("/get", async(req,res)=>{
+app.get("/get",ratelimitter, async(req,res)=>{
     
     const user= await User.find({})
 
