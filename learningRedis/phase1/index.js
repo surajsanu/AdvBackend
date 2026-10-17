@@ -5,6 +5,8 @@ import dns from 'dns';
 import User from "./model/user.model.js";
 import Redis from "ioredis";
 import ratelimitter from "./middleware/ratelimit.js";
+import sendEmail from "./lib/sendEmail.js";
+import emailQueue from "./queue.js";
 dns.setServers(['8.8.8.8', '1.1.1.1']);
 
 dotenv.config();
@@ -27,6 +29,11 @@ app.post("/create", async(req,res)=>{
     const user= await User.create({
         name, email, password
     })
+    //await sendEmail()  //Without queue - took 5.10 secs
+
+    await emailQueue.add("send-email",{email}) //Queue will added to worker
+
+
 
     res.json(user)
 })
