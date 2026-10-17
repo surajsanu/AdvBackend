@@ -7,7 +7,7 @@ import Redis from "ioredis";
 import ratelimitter from "./middleware/ratelimit.js";
 import sendEmail from "./lib/sendEmail.js";
 import emailQueue from "./queue.js";
-dns.setServers(['8.8.8.8', '1.1.1.1']);
+//dns.setServers(['8.8.8.8', '1.1.1.1']);
 
 dotenv.config();
 
