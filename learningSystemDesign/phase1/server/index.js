@@ -1,13 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./lib/db.js";
-import dns from 'dns';
 import User from "./model/user.model.js";
 import Redis from "ioredis";
 import ratelimitter from "./middleware/ratelimit.js";
 import sendEmail from "./lib/sendEmail.js";
 import emailQueue from "./queue.js";
-//dns.setServers(['8.8.8.8', '1.1.1.1']);
 
 dotenv.config();
 
