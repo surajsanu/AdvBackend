@@ -13,12 +13,12 @@ const app = express();
 app.use(express.json())
 
 app.get("/", (req, res) => {
-    return res.status(200).json({message:`Hello from Backend or Gateway `})
+    return res.status(200).json({message:`Hello from Backend or Gateway ${process.env.SERVER_NAME}`})
 });
 
-app.use("/auth",proxy("http://localhost:8001"))
-app.use("/order",proxy("http://localhost:8002"))
-app.use("/product",proxy("http://localhost:8003"))
+app.use("/auth",proxy("http://auth-service:8001"))
+app.use("/order",proxy("http://order-service:8002"))
+app.use("/product",proxy("http://product-service:8003"))
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);      
 })
